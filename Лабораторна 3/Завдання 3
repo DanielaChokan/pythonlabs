@@ -1,0 +1,9 @@
+sentence = input("Введіть речення: ")
+
+words = sentence.split()
+
+words.sort(key=len)
+
+print("Отримане речення: ")
+
+print(words)
