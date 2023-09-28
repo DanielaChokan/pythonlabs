@@ -1,0 +1,14 @@
+print("Enter the length of the array")
+n = int(input("n = "))
+
+print(f"Enter {n} array elements:")
+
+arr = [int(input()) for _ in range(n)]
+
+print("Original array: ", arr)
+
+print("Negative elements in the reverse order:")
+
+for i in range(n - 1 , 0 , -1):
+    if arr[i] < 0:
+        print(arr[i])
