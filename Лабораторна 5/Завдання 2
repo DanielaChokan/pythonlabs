@@ -1,0 +1,12 @@
+n = 7
+
+for i in range(-6 , 1 , 1):
+    a = i
+    for j in range(n):
+        if a >= 0: 
+            print(end=" ")
+        print(a , end='')
+        print(end=" ")
+        a = a + 1
+      
+    print()
