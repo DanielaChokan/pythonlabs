@@ -1,0 +1,100 @@
+import time
+import os
+
+def Print (car):
+  for i in car:
+    print(i, " - ", car[i])
+
+def Add(car, key, price, year):
+  car[key] = {"price": price, "year": year}
+  print("Додано", key, ".")
+
+def Del(car, key):
+  del car[key]
+  print("Видалено", key, ".")
+
+def print_sort(car):
+  car = {k: car[k] for k in sorted(car)}
+  print("Відсортований словник: ")
+  for i in car:
+    print(i, " - ", car[i])
+
+def variant(car):
+  sum = 0
+  count = 0
+  for i in car:
+    if (2023 - car[i]["year"] <= 6):
+      sum += car[i]["price"]
+      count += 1
+  if(count == 0):
+    print("Немає автомобілів, рік випуску яких не перевищує 6 років")
+  else:
+    print("Середня вартість автомобілів, «вік» яких перевищує 6 років: ", sum / count)
+
+
+car = {"Toyota": {"price": 7500, "year": 2015}, "Audi": {"price": 9000, "year": 2017}, "Volkswagen": {"price": 12000, "year": 2016}, "BMW": {"price": 9500, "year": 2019}, "Renault": {"price": 7000, "year": 2015}, "Kia": {"price": 8000, "year": 2016}, "Skoda": {"price": 6000, "year": 2013}, "Hyundai": {"price": 9500, "year": 2015}, "Mercedes": {"price": 11500, "year": 2018}, "Volvo": {"price": 5500, "year": 2014}}
+
+flag = 1
+while flag == 1:
+  print("Якщо ви бажаєте вивести всі дані зі словника, натисніть 1")
+  print("Якщо ви бажаєте додати нові дані до словника, натисніть 2")
+  print("Якщо ви бажаєте видалити дані зі словника, натисніть 3")
+  print("Якщо ви бажаєте переглянути вміст словника за відсортованими ключами, натисніть 4")
+  print("Якщо ви бажаєте дізнатися середню вартість автомобілів, «вік» яких перевищує 6 років, натисніть 5")
+  print("Якщо ви бажаєте вийти з програми, натисніть 0")
+  action = int(input("Введіть дію: "))
+  if (action < 0 or action > 5):
+	  print("Неправильно введено номер дії")
+  else:
+    if (action == 1):
+      Print(car)
+      time.sleep(5)
+      os.system('cls' if os.name == 'nt' else 'clear')
+    else:
+      if(action == 2):
+        key = input("Введіть марку автомобіля: ")
+        while 1:
+          price = input("Введіть вартість автомобіля: ")
+          if not price.isdigit():
+            print("Некоректно введено дані. Спробуйте ща раз: ")
+          else:
+            price = int(price)
+            break
+        while 1:
+           year = input("Введіть рік випуску автомобіля: ")
+           if not year.isdigit():
+             print("Некоректно введено дані. Спробуйте ща раз: ")
+           else:
+             if(year > '2023'):
+               print("Некоректно введено дані. Спробуйте ща раз: ")
+             else:  
+               year = int(year)
+               break    
+        Add(car, key, price, year)
+        time.sleep(5)
+        os.system('cls' if os.name == 'nt' else 'clear')
+      else:
+        if(action == 3):
+          while 1:
+            key = input("Введіть ключ елемента, який потрібно видалити: ")
+            if key not in car:
+              print("Такого ключа немає в словнику. Спробуйте ще раз:")
+            else:
+              break
+          Del(car, key)
+          time.sleep(5)
+          os.system('cls' if os.name == 'nt' else 'clear')
+        else:
+          if(action == 4):
+            print_sort(car)
+            time.sleep(5)
+            os.system('cls' if os.name == 'nt' else 'clear')
+          else:
+            if(action == 5):
+              variant(car)
+              time.sleep(5)
+              os.system('cls' if os.name == 'nt' else 'clear')
+            else:
+              if(action == 0):
+                flag = 0
+                print("Роботу програми завершено")
