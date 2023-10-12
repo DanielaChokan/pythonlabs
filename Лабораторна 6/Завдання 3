@@ -1,0 +1,10 @@
+A = input("Enter a text: ")
+unique_letters = []
+result = []
+
+for letter in A:
+  if letter not in unique_letters:
+    unique_letters.append(letter)
+    result.append(letter)
+
+print(set(result))
