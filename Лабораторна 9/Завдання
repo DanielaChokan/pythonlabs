@@ -36,5 +36,5 @@ file_3_r = Open(file2_name, "r")
 if file_3_r != None:
     for line in file_3_r.read().split():
         print(line)
-    print("File TF2_2.txt was closed!")
+    print("File TF15_2.txt was closed!")
     file_3_r.close()
