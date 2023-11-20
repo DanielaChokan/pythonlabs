@@ -1,0 +1,39 @@
+import csv
+import os
+
+try:
+    with open("Lab11.csv", "r", encoding="utf-8") as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=";")
+
+        min_value = float('inf')
+        max_value = float('-inf')
+          
+        print("All data from Lab11.csv:")
+        for row in reader:
+            print(row)
+
+         
+        csvfile.seek(0)
+        next(reader)
+
+        for row in reader:
+            if row['Country Name'] == 'Ukraine':
+                for year in range(1991, 2020):
+                  value = float(row[f"{year} [YR{year}]"].replace(',', '.'))
+
+                  if value < min_value:
+                        min_value = value
+                  if value > max_value:
+                        max_value = value
+
+        print("\nMin Life Expectancy:", min_value)
+        print("Max Life Expectancy:", max_value)
+
+        with open("min_max_values.csv", "w", newline='', encoding="utf-8") as csvfile2:
+            writer = csv.DictWriter(csvfile2, fieldnames=["Stat", "Value"], delimiter=";")
+            writer.writeheader()
+            writer.writerow({"Stat": "Min Life Expectancy", "Value": min_value})
+            writer.writerow({"Stat": "Max Life Expectancy", "Value": max_value})
+
+except FileNotFoundError:
+    print("Файл Lab11.csv не знайдено!")
