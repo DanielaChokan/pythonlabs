@@ -1,0 +1,29 @@
+try:
+  # Зчитуємо дані з файлу
+  with open('questions_lab10.txt', 'r') as file:
+      lines = file.readlines()
+      for line in lines:
+          print(line, end='')
+
+  # Прізвище другого студента
+  second_student_surname = 'Чокан IT-21'
+
+  # Розгорнута відповідь на питання
+  second_student_answer = '''
+  В Python існує безліч вбудованих функцій, призначених для різних завдань. Наприклад, функція print використовується для виведення
+інформації на екран, функція input - для отримання введених даних від користувача. Також існують функції для роботи з рядками,
+списками, числами, файлами та багато інших.
+  Для використання вбудованих функцій, потрібно просто визвати їх і передати необхідні параметри. Наприклад:
+  result = len("Hello, World!") 
+  print(result)  
+  '''
+
+  # Питання для третього студента
+  second_student_question = 'Які основні типи даних в Python?'
+
+  # Запис відповіді та нового питання у файл
+  with open('questions_lab10.txt', 'a') as file:
+      file.write(f'\nПрізвище: {second_student_surname}\nВідповідь: {second_student_answer}\nПитання: {second_student_question}\n')
+
+except Exception as e:
+  print(f'Виникла помилка: {e}')
