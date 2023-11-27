@@ -1,0 +1,96 @@
+import json
+
+def data():
+# Завантаження даних з заданого словника
+  car_data = {
+              "Toyota": {"price": 7500, "year": 2015},
+              "Audi": {"price": 9000, "year": 2017},
+              "Volkswagen": {"price": 12000, "year": 2016},
+              "BMW": {"price": 9500, "year": 2019},
+              "Renault": {"price": 7000, "year": 2015},
+              "Kia": {"price": 8000, "year": 2016},
+              "Skoda": {"price": 6000, "year": 2013},
+              "Hyundai": {"price": 9500, "year": 2015},
+              "Mercedes": {"price": 11500, "year": 2018},
+              "Volvo": {"price": 5500, "year": 2014}
+   }
+  return car_data
+
+
+def print_json(data):
+# Виведення на екран вмісту JSON файлу
+  print(json.dumps(data, indent=2))
+
+
+def add_or_remove(data, brand, price, year, action):
+# Додавання чи видалення нового запису у JSON файл
+  if action == "add":
+    data[brand] = {"price": price, "year": year}
+    print(f"Додано запис для {brand}.")
+  elif action == "remove" and brand in data:
+    del data[brand]
+    print(f"Видалено запис для {brand}.")
+  else:
+    print(f"Запис для {brand} не існує.")
+
+    
+def search(data, field, value):
+# Пошук даних у JSON файлі за одним із полів на вибір
+  result = [car for car, details in data.items() if details.get(field) == value]
+  return result
+
+
+def variant(data):
+# Середня вартість автомобілів, «вік» яких перевищує 6 років
+  relevant_cars = [details["price"] for details in data.values() if 2023 - details["year"] > 6]
+  if relevant_cars:
+    average_price = sum(relevant_cars) / len(relevant_cars)
+    return average_price
+  else:
+    return 0
+
+    
+def save_result_to_json(result, output_file):
+# Збереження результату в інший JSON файл
+  with open(output_file, 'w') as f:
+    json.dump(result, f, indent=2)
+    print(f"Результат збережено у файлі {output_file}.")
+
+
+car_data = data()
+
+while True:
+  print("\n=== Меню користувача ===")
+  print("1. Вивести вміст JSON файлу")
+  print("2. Додати новий запис")
+  print("3. Видалити запис")
+  print("4. Пошук за полем")
+  print("5. Визначити середню вартість автомобілів, вік яких перевищує 6 років")
+  print("0. Вихід")
+
+  choice = input("Виберіть опцію (0-5): ")
+
+  if choice == "1":
+    print_json(car_data)
+  elif choice == "2":
+    brand = input("Введіть марку автомобіля: ")
+    price = int(input("Введіть вартість автомобіля: "))
+    year = int(input("Введіть рік випуску автомобіля: "))
+    add_or_remove(car_data, brand, price, year, "add")
+  elif choice == "3":
+    brand = input("Введіть марку автомобіля для видалення: ")
+    add_or_remove(car_data, brand, None, None, "remove")
+  elif choice == "4":
+    field = input("Введіть поле для пошуку (наприклад, 'year' або 'price'): ")
+    value = input(f"Введіть значення для поля {field}: ")
+    result = search(car_data, field, int(value) if field == 'year' or field == 'price' else value)
+    print("Результат пошуку:", result)
+  elif choice == "5":
+    average_price_result = variant(car_data)
+    result_data = {"Result": average_price_result}
+    save_result_to_json(result_data, "result.json")
+  elif choice == "0":
+    print("Дякую за використання програми. До побачення!")
+    break
+  else:
+    print("Введено некоректний вибір. Спробуйте ще раз.")
