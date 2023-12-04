@@ -1,0 +1,17 @@
+import matplotlib.pyplot as plt  
+
+import numpy as np
+
+t = np.linspace(0, 8, 80) 
+
+y = 5 * np.sin(10 * t) * np.sin(3 * t) / (t  t)
+
+plt.plot(t, y, label='5 * np.sin(10 * t) * np.sin(3 * t) / (t  t)', color = "red", linewidth = 2)
+
+plt.title('My plot', fontsize=15)  
+
+plt.xlabel('t', fontsize=12, color='blue')
+plt.ylabel('y', fontsize=12, color='blue')  
+plt.legend()
+plt.grid(True)
+plt.show()
