@@ -1,0 +1,31 @@
+import csv
+import json
+
+# Функція для читання даних з CSV файлу та запису їх у JSON файл
+def csv_to_json(csv_file, json_file):
+    try:
+        with open(csv_file, 'r', newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            data = [row for row in reader]
+
+           # Додаємо кілька нових рядків
+            new_rows = [
+                ["Новий рядок 4"],
+                ["Новий рядок 5"],
+                ["Новий рядок 6"]
+            ]
+
+            data.extend(new_rows)
+
+            # Записуємо дані у JSON файл
+            with open(json_file, 'w', encoding='utf-8') as jsonfile:
+                json.dump(data, jsonfile, ensure_ascii=False)
+
+        print(f'Дані з CSV файлу "{csv_file}" успішно записано у JSON файл "{json_file}".')
+    except Exception as e:
+        print(f'Помилка при конвертації даних з CSV у JSON: {e}')
+
+csv_file_name = 'lab_data.csv'
+json_file_name = 'lab_data.json'
+
+csv_to_json(csv_file_name, json_file_name)
