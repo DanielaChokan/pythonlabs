@@ -1,0 +1,35 @@
+import pandas as pd
+
+car = {
+    "Toyota": {"price": 7500, "year": 2015},
+    "Audi": {"price": 9000, "year": 2017},
+    "Volkswagen": {"price": 12000, "year": 2016},
+    "BMW": {"price": 9500, "year": 2019},
+    "Renault": {"price": 7000, "year": 2015},
+    "Kia": {"price": 8000, "year": 2016},
+    "Skoda": {"price": 6000, "year": 2013},
+    "Hyundai": {"price": 9500, "year": 2015},
+    "Mercedes": {"price": 11500, "year": 2018},
+    "Volvo": {"price": 5500, "year": 2014}
+}
+
+# Перетворення словника на датафрейм
+df = pd.DataFrame.from_dict(car, orient='index')
+
+# Виведення датафрейму на екран
+print("Датафрейм до доповнення:")
+print(df)
+
+# Додавання нових даних (країни виробника)
+df['country'] = ['Japan', 'Germany', 'Germany', 'Germany', 'France', 'South Korea', 'Czech Republic', 'South Korea', 'Germany', 'Sweden']
+
+# Виведення датафрейму після доповнення
+print("\nДатафрейм після доповнення:")
+print(df)
+
+# Агрегація та групування
+aggregated_data = df.groupby('country').agg({'price': 'mean', 'year': 'min'})
+
+# Виведення результатів агрегації та групування
+print("\nАгреговані дані:")
+print(aggregated_data)
