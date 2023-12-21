@@ -1,0 +1,46 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+import string
+
+# Завантаження стоп-слів та інших ресурсів NLTK
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+def process_text(input_text):
+    # Токенізація по словам
+    tokens = word_tokenize(input_text)
+
+    # Лемматизація та стеммінг
+    lemmatizer = WordNetLemmatizer()
+    stemmer = PorterStemmer()
+    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
+    stemmed_tokens = [stemmer.stem(token) for token in tokens]
+
+    # Видалення стоп-слів
+    stop_words = set(stopwords.words('english')) 
+    filtered_tokens = [token for token in lemmatized_tokens if token.lower() not in stop_words]
+
+    # Видалення пунктуації
+    no_punctuation_tokens = [token for token in filtered_tokens if token not in string.punctuation]
+
+    # Повернення обробленого тексту
+    processed_text = ' '.join(no_punctuation_tokens)
+    return processed_text
+
+# Шлях до вхідного та вихідного файлів
+input_file_path = r'C:\Users\HP\Downloads\lab16.txt'
+output_file_path = r'C:\Users\HP\Downloads\processed_lab16.txt'
+
+# Зчитування тексту з файлу
+with open(input_file_path, 'r', encoding='utf-8') as file:
+    input_text = file.read()
+
+# Обробка тексту
+processed_text = process_text(input_text)
+
+# Запис обробленого тексту у файл
+with open(output_file_path, 'w', encoding='utf-8') as file:
+    file.write(processed_text)
