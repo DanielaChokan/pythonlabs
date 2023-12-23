@@ -1,46 +1,47 @@
 import nltk
-import string
-import numpy as np
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 import matplotlib.pyplot as plt
 from collections import Counter
 
-nltk.download('punkt')
+# Завантаження стоп-слів
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english'))
 
-try:
-    file_path = r'C:\Users\HP\Downloads\edgeworth-parents.txt'  # Оновлений шлях до файлу
-    with open(file_path, 'r', encoding='utf-8') as file:
-        text = file.read()
+# Завантаження тексту з файлу
+file_path = r'C:\Users\HP\Downloads\edgeworth-parents.txt'
+with open(file_path, 'r', encoding='utf-8') as file:
+    text = file.read()
 
-except FileNotFoundError:
-    print("Файл не знайдено!")
-    exit(0)
+# Токенізація слів
+words = word_tokenize(text)
 
-def count_words(text):
-    sentences = nltk.sent_tokenize(text)
-    k_words = 0
+# Визначення кількості слів у тексті
+word_count = len(words)
+print(f"Кількість слів у тексті: {word_count}")
 
-    for sentence in sentences:
-        words = nltk.word_tokenize(sentence)
-        k_words += len(words)
+# Знайти 10 найбільш вживаних слів та побудувати стовпчасту діаграму
+word_freq = Counter(words)
+top_words, top_freq = zip(*word_freq.most_common(10))
 
-    return k_words
+plt.figure(figsize=(10, 6))
+plt.bar(top_words, top_freq, color='skyblue')
+plt.title('10 найбільш вживаних слів у тексті')
+plt.xlabel('Слова')
+plt.ylabel('Частота')
+plt.show()
 
-def most_used_words(text):
-    text1 = text.split()
-    cnt = Counter(text1)
-    cort = cnt.most_common(10)
+# Видалення стоп-слів та пунктуації
+filtered_words = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
 
-    x = [cort[el][0] for el in range(len(cort))]
-    y = [cort[el][1] for el in range(len(cort))]
+# Знайти 10 найбільш вживаних слів після видалення стоп-слів та пунктуації
+filtered_word_freq = Counter(filtered_words)
+filtered_top_words, filtered_top_freq = zip(*filtered_word_freq.most_common(10))
 
-    plt.bar(x, y)
-    plt.title("10 найбільш вживаних слів у тексті")
-    plt.xlabel("Слова")
-    plt.ylabel("Зустрічаються разів у тексті")
-    plt.show()
-
-# Виклик функцій
-num_words = count_words(text)
-print(f"Кількість слів у тексті: {num_words}")
-
-most_used_words(text)
+# Побудова стовпчастої діаграми після видалення стоп-слів та пунктуації
+plt.figure(figsize=(10, 6))
+plt.bar(filtered_top_words, filtered_top_freq, color='lightcoral')
+plt.title('10 найбільш вживаних слів після видалення стоп-слів та пунктуації')
+plt.xlabel('Слова')
+plt.ylabel('Частота')
+plt.show()
